@@ -13,18 +13,22 @@
   <button onclick="onsubmit()">Soumettre</button>
 </form> -->
 
-<div class="example-container">
-  <div class="form-container">
-    <form [formGroup]="uploadForm" (submit)="submit()">
-      <mat-form-field class="form-field">
-        <mat-label> E-mail </mat-label>
-        <input matInput formControlName="email"/>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label> Lien</mat-label>
-        <input matInput formControlName="link">
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">Log In</button>
-    </form>
-  </div>
-</div>
+<form [formGroup]="uploadForm" (submit)="submit()" #myform="ngForm">
+  <mat-form-field>
+    <mat-label> E-mail </mat-label>
+    <input matInput formControlName="email" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label> Lien </mat-label>
+    <input matInput formControlName="link" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label> Validité </mat-label>
+    <mat-select>
+      <mat-option> 1 </mat-option>
+      <mat-option> 2 </mat-option>
+      <mat-option> 3 </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Soumettre</button>
+</form>

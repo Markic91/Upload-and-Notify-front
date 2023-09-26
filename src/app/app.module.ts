@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent],
@@ -22,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],
