@@ -1,34 +1,16 @@
-<!-- <form (ngSubmit)="onSubmit()" [formGroup]="uplaodForm" #myForm="ngForm">
-  <label for="link">Fichier :</label>
-  <input type="file" id="link" formControlName="link" multiple="multiple"/><br>
-  <label for="email"> Email : </label>
-  <input type="email" id="email" formControlName="email" /><br>
-  <label for="expiration">Durée de validité</label>
-  <select name="expiration" id="expiration" formControlName="expiration">
-    <option value="">1 jour</option>
-    <option value="">1 mois</option>
-    <option value="">1 an</option>
-    <option value="">Jamais</option>
-  </select>
-  <button onclick="onsubmit()">Soumettre</button>
-</form> -->
-
-<form [formGroup]="uploadForm" (submit)="submit()" #myform="ngForm">
-  <mat-form-field>
-    <mat-label> E-mail </mat-label>
-    <input matInput formControlName="email" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label> Lien </mat-label>
-    <input matInput formControlName="link" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label> Validité </mat-label>
-    <mat-select>
-      <mat-option> 1 </mat-option>
-      <mat-option> 2 </mat-option>
-      <mat-option> 3 </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button mat-raised-button color="primary" type="submit">Soumettre</button>
-</form>
+<div class="container">
+  <form (ngSubmit)="onSubmit()" [formGroup]="uploadForm" #myForm="ngForm">
+    <label for="link">Fichier :</label>
+    <input type="file" id="link" formControlName="link" multiple="multiple" />
+    <label for="email"> Email : </label>
+    <input class="email" type="email" id="email" formControlName="email" />
+    <label for="expiration">Durée de validité :</label>
+    <select name="expiration" id="expiration" formControlName="expiration">
+      <option value="">1 jour</option>
+      <option value="">1 mois</option>
+      <option value="">1 an</option>
+      <option value="">Jamais</option>
+    </select>
+    <button onclick="onSubmit()">Soumettre</button>
+  </form>
+</div>
