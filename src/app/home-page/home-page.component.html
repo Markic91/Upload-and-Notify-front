@@ -6,14 +6,14 @@
     <input class="email" type="email" id="email" formControlName="email" />
     <label for="expiration">Durée de validité :</label>
     <select name="expiration" id="expiration" formControlName="expiration">
-      <option value="1 jour">1 jour</option>
-      <option value="1 mois">1 mois</option>
-      <option value="1 an">1 an</option>
-      <option value="Jamais">Jamais</option>
+      <option [value]="todayDate">1 jour</option>
+      <option [value]="todayDate">1 mois</option>
+      <option [value]="todayDate">1 an</option>
+      <option [value]="todayDate">Jamais</option>
     </select>
     <button type="submit">Soumettre</button>
   </form>
 </div>
 <div *ngFor="let file of files">
-  <p>{{ file.url }} - {{ file.expiration }}</p>
+  <p>{{ file.link }} - {{ file.expiration }}</p>
 </div>

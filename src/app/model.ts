@@ -1,4 +1,4 @@
 export type File = {
-  url: string;
+  link: string;
   expiration: Date;
 }

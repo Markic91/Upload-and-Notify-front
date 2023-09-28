@@ -13,11 +13,10 @@ import { File } from '../model';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
-
 export class HomePageComponent {
-
   files: File[] = [];
-  test!: string;
+  file!: File;
+  todayDate : Date = new Date();
 
   constructor(
     private formbuilder: FormBuilder,
@@ -25,13 +24,13 @@ export class HomePageComponent {
   ) {}
 
   ngOnInit() {
-    this.getFilesFromService()
+    this.getFilesFromService();
   }
 
   uploadForm = this.formbuilder.group({
     email: ['', [Validators.email]],
     link: ['', [Validators.required]],
-    expiration: ['', [Validators.required]],
+    expiration: [new Date(), [Validators.required]],
   });
 
   getFilesFromService() {
@@ -41,11 +40,14 @@ export class HomePageComponent {
   }
 
   // createFileFromService() {
-  //   this.apiService.createFile(uploadForm).subscribe;
+  //   this.apiService.createFile(this.file).subscribe;
   // }
 
   onSubmit() {
-    console.log(this.uploadForm.value);
+     this.file = {
+      link: this.uploadForm.value.link,
+      expiration: this.uploadForm.value.expiration,
+    } as File;
+    console.log(this.file);
   }
-  
 }
