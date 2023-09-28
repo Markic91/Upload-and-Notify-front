@@ -1,4 +1,4 @@
-export type File = {
+export type Toto = {
   link: string;
   expiration: Date;
 }

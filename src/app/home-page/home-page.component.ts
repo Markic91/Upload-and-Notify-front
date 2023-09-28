@@ -6,7 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { ApiService } from '../api.service';
-import { File } from '../model';
+import { Toto } from '../model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-home-page',
@@ -14,15 +15,16 @@ import { File } from '../model';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
-  files: File[] = [];
-  file!: File;
-  todayDate : Date = new Date();
+  files: Toto[] = [];
+  file!: Toto;
+  todayDate = formatDate(new Date(),'yyyy/MM/dd', 'en');
 
   constructor(
     private formbuilder: FormBuilder,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) {}
 
+  
   ngOnInit() {
     this.getFilesFromService();
   }
@@ -39,15 +41,20 @@ export class HomePageComponent {
     });
   }
 
-  // createFileFromService() {
-  //   this.apiService.createFile(this.file).subscribe;
-  // }
+  createFileFromService() {
+    this.apiService.createFile(this.file).subscribe;
+    console.log("coucou");
+  }
+
 
   onSubmit() {
-     this.file = {
+    this.file = {
       link: this.uploadForm.value.link,
       expiration: this.uploadForm.value.expiration,
-    } as File;
+    } as Toto;
+    this.createFileFromService();
     console.log(this.file);
+    
   }
+
 }
