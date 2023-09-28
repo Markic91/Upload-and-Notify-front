@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-home-page',
@@ -12,13 +13,28 @@ import {
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
-  constructor(private formbuilder: FormBuilder) {}
+  files: any[] = [];
+
+  constructor(
+    private formbuilder: FormBuilder,
+    private apiService: ApiService
+  ) {}
+
+  // ngOnInit() {
+  //   this.getFilesFromService()
+  // }
 
   uploadForm = this.formbuilder.group({
     email: ['', [Validators.email]],
     link: ['', [Validators.required]],
     expiration: ['', [Validators.required]],
   });
+
+  // getFilesFromService() {
+  //   this.apiService.getFiles().subscribe((data) => {
+  //     this.files = data;
+  //   });
+  // }
 
   onSubmit() {
     console.log('coucou');
