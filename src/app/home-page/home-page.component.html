@@ -1,4 +1,4 @@
-<!-- <div class="container">
+<div class="container">
   <form (ngSubmit)="onSubmit()" [formGroup]="uploadForm" #myForm="ngForm">
     <label for="link">Fichier :</label>
     <input type="file" id="link" formControlName="link" multiple="multiple" />
@@ -6,12 +6,14 @@
     <input class="email" type="email" id="email" formControlName="email" />
     <label for="expiration">Durée de validité :</label>
     <select name="expiration" id="expiration" formControlName="expiration">
-      <option value="">1 jour</option>
-      <option value="">1 mois</option>
-      <option value="">1 an</option>
-      <option value="">Jamais</option>
+      <option value="1 jour">1 jour</option>
+      <option value="1 mois">1 mois</option>
+      <option value="1 an">1 an</option>
+      <option value="Jamais">Jamais</option>
     </select>
-    <button onclick="onSubmit()">Soumettre</button>
+    <button type="submit">Soumettre</button>
   </form>
-</div> -->
-<p>Salut</p>
+</div>
+<div *ngFor="let file of files">
+  <p>{{ file.url }} - {{ file.expiration }}</p>
+</div>
