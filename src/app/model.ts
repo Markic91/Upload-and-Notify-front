@@ -1,4 +1,4 @@
 export type Toto = {
   link: string;
-  expiration: Date;
+  expiration: string;
 }

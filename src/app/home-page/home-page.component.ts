@@ -17,22 +17,16 @@ import { formatDate } from '@angular/common';
 export class HomePageComponent {
   files: Toto[] = [];
   file!: Toto;
-  todayDate = formatDate(new Date(),'yyyy/MM/dd', 'en');
 
   constructor(
     private formbuilder: FormBuilder,
-    private apiService: ApiService,
+    private apiService: ApiService
   ) {}
-
-  
-  ngOnInit() {
-    this.getFilesFromService();
-  }
 
   uploadForm = this.formbuilder.group({
     email: ['', [Validators.email]],
     link: ['', [Validators.required]],
-    expiration: [new Date(), [Validators.required]],
+    expiration: ['', [Validators.required]],
   });
 
   getFilesFromService() {
@@ -42,10 +36,8 @@ export class HomePageComponent {
   }
 
   createFileFromService() {
-    this.apiService.createFile(this.file).subscribe;
-    console.log("coucou");
+    this.apiService.createFile(this.file).subscribe((data) => (data));
   }
-
 
   onSubmit() {
     this.file = {
@@ -53,8 +45,6 @@ export class HomePageComponent {
       expiration: this.uploadForm.value.expiration,
     } as Toto;
     this.createFileFromService();
-    console.log(this.file);
-    
+    // console.log(this.file);
   }
-
 }
