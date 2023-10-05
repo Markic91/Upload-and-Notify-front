@@ -1,16 +1,12 @@
 <div class="container">
-  <form (ngSubmit)="onSubmit()" [formGroup]="uploadForm" #myForm="ngForm">
+  <form (ngSubmit)="uploadForm.valid && onSubmit()" [formGroup]="uploadForm" #myForm="ngForm" >
     <label for="link">Fichier :</label>
-    <input type="file" id="link" formControlName="link" multiple="multiple" />
-    <label for="email"> Email : </label>
-    <input class="email" type="email" id="email" formControlName="email" />
-    <label for="expiration">Durée de validité :</label>
-    <select name="expiration" id="expiration" formControlName="expiration">
-      <option value="1 jour">1 jour</option>
-      <option value="1 mois">1 mois</option>
-      <option value="1 an">1 an</option>
-      <option value="Jamais">Jamais</option>
+    <input type="file" id="link" formControlName="link" multiple="multiple" (change)="inputFileChange($event)"  />
+    <label for="expiration">Durée avant expiration :</label>
+    <select name="expiration" id="expiration" formControlName="expiration" (change)="selectChange($event)">
+      <option *ngFor="let option of options | keyvalue " [value]="option.value">{{option.value}}</option>
     </select>
+    <label for="email"> Email (optionnel) : </label>
+    <input class="email" type="email" id="email" formControlName="email" (change)="inputMailChange($event)" placeholder="Email de la personne à aviser" />
     <button type="submit">Soumettre</button>
   </form>
-</div>

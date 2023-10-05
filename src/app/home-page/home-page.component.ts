@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
-import { Toto } from '../model';
-import { formatDate } from '@angular/common';
+
+enum ExpOption {
+  A = '1 jour',
+  B = '1 mois',
+  C = '1 an',
+  D = 'Jamais',
+}
 
 @Component({
   selector: 'app-home-page',
@@ -15,8 +15,11 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
-  files: Toto[] = [];
-  file!: Toto;
+  options: Object = ExpOption;
+  // link: unknown;
+  emailControl?: string;
+  files: FormData = new FormData();
+  index!: number;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -24,9 +27,9 @@ export class HomePageComponent {
   ) {}
 
   uploadForm = this.formbuilder.group({
-    email: ['', [Validators.email]],
     link: ['', [Validators.required]],
     expiration: ['', [Validators.required]],
+    email: [this.emailControl, [Validators.email]],
   });
 
   getFilesFromService() {
@@ -36,15 +39,45 @@ export class HomePageComponent {
   }
 
   createFileFromService() {
-    this.apiService.createFile(this.file).subscribe((data) => (data));
+    this.apiService.createFile(this.files).subscribe();
+  }
+  inputFileChange(event: Event) {
+    this.uploadForm.controls['link'].valueChanges;
+    const input = event.target as HTMLInputElement;
+    this.index = input.files!.length;
+    for (let i = 0; i < input.files!.length; i++) {
+      let blobUrl = URL.createObjectURL(input.files![i]);
+      let blobName = input.files![i].name;
+
+      this.files.append(`blob${i}`, blobName);
+      this.files.append(`blob${i}`, blobUrl);
+    }
   }
 
+  selectChange(event: Event) {
+    this.uploadForm.controls['expiration'].valueChanges;
+    const select = event.target as HTMLSelectElement;
+    for (let i = 0; i < this.index; i++) {
+      this.files.append(`blob${i}`, select.value);
+    }
+  }
+  inputMailChange(event: Event) {
+    this.uploadForm.controls['email'].value;
+    const input = event.target as HTMLInputElement;
+    for (let i = 0; i < this.index; i++) {
+      this.files.append(`blob${i}`, input.value);
+    }
+  }
   onSubmit() {
-    this.file = {
-      link: this.uploadForm.value.link,
-      expiration: this.uploadForm.value.expiration,
-    } as Toto;
+   
+    for (let i = 0; i < this.index; i++) {
+      console.log(this.files.getAll(`blob${i}`));
+    }
+
     this.createFileFromService();
+    for (let i = 0; i < this.index; i++) {
+    this.files.delete(`blob${i}`)};
+    this.uploadForm.reset();
   }
   
 }
