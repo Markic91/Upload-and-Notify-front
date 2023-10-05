@@ -45,6 +45,6 @@ export class HomePageComponent {
       expiration: this.uploadForm.value.expiration,
     } as Toto;
     this.createFileFromService();
-    // console.log(this.file);
   }
+  
 }
