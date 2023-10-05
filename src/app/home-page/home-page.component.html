@@ -1,7 +1,7 @@
 <div class="container">
   <form (ngSubmit)="uploadForm.valid && onSubmit()" [formGroup]="uploadForm" #myForm="ngForm" >
     <label for="link">Fichier :</label>
-    <input type="file" id="link" formControlName="link" multiple="multiple" (change)="inputFileChange($event)" enctype="multipart/form-data" />
+    <input type="file" id="link" formControlName="link" multiple="multiple" (change)="inputFileChange($event)"  />
     <label for="expiration">Durée avant expiration :</label>
     <select name="expiration" id="expiration" formControlName="expiration" (change)="selectChange($event)">
       <option *ngFor="let option of options | keyvalue " [value]="option.value">{{option.value}}</option>

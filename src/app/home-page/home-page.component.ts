@@ -69,11 +69,14 @@ export class HomePageComponent {
     }
   }
   onSubmit() {
+   
     for (let i = 0; i < this.index; i++) {
       console.log(this.files.getAll(`blob${i}`));
     }
 
     this.createFileFromService();
+    for (let i = 0; i < this.index; i++) {
+    this.files.delete(`blob${i}`)};
     this.uploadForm.reset();
   }
 }
