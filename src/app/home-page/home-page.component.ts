@@ -49,8 +49,9 @@ export class HomePageComponent {
    
     
     for (let i = 0; i < fileList!.length; i++) {
-      // let blobUrl = URL.createObjectURL(fileList![i]);
-      this.formData.append(`file`,  fileList![i],  );
+      let blobUrl = URL.createObjectURL(fileList![i]);
+      this.formData.append(`file`,  fileList![i] );
+      this.formData.append('file', blobUrl);
      
     }
   
