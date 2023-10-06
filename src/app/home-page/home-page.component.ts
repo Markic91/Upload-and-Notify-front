@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
+import { KeyValuePipe } from '@angular/common';
 
 enum ExpOption {
   A = '1 jour',
@@ -16,9 +17,8 @@ enum ExpOption {
 })
 export class HomePageComponent {
   options: Object = ExpOption;
-  // link: unknown;
-  emailControl?: string;
-  files: FormData = new FormData();
+  // link!: FileList;
+  formData = new FormData();
   index!: number;
 
   constructor(
@@ -28,54 +28,61 @@ export class HomePageComponent {
 
   uploadForm = this.formbuilder.group({
     link: ['', [Validators.required]],
-    expiration: ['', [Validators.required]],
-    email: [this.emailControl, [Validators.email]],
+    expiration: ['',Validators.required],
+    email: ['', [Validators.email]],
   });
 
   getFilesFromService() {
     this.apiService.getFiles().subscribe((data) => {
-      this.files = data;
+      this.formData = data;
     });
   }
 
   createFileFromService() {
-    this.apiService.createFile(this.files).subscribe();
+    this.apiService.createFile(this.formData).subscribe();
   }
   inputFileChange(event: Event) {
     this.uploadForm.controls['link'].valueChanges;
     const input = event.target as HTMLInputElement;
     this.index = input.files!.length;
-    for (let i = 0; i < input.files!.length; i++) {
-      let blobUrl = URL.createObjectURL(input.files![i]);
-      let blobName = input.files![i].name;
-
-      this.files.append(`blob${i}`, blobName);
-      this.files.append(`blob${i}`, blobUrl);
+    let fileList = input.files!;
+   
+    
+    for (let i = 0; i < fileList!.length; i++) {
+      let blobUrl = URL.createObjectURL(fileList![i]);
+      this.formData.append(`file`,  fileList![i] );
+      this.formData.append('file', blobUrl);
+     
     }
+  
+   
+    console.log(fileList);
   }
 
   selectChange(event: Event) {
     this.uploadForm.controls['expiration'].valueChanges;
     const select = event.target as HTMLSelectElement;
-    for (let i = 0; i < this.index; i++) {
-      this.files.append(`blob${i}`, select.value);
-    }
+    // for (let i = 0; i < this.index; i++) {
+      this.formData.append(`file`, select.value);
+    // }
   }
+
   inputMailChange(event: Event) {
     this.uploadForm.controls['email'].value;
     const input = event.target as HTMLInputElement;
-    for (let i = 0; i < this.index; i++) {
-      this.files.append(`blob${i}`, input.value);
-    }
+    // for (let i = 0; i < this.index; i++) {
+      this.formData.append(`file`, input.value);
+    // }
   }
   onSubmit() {
-    for (let i = 0; i < this.index; i++) {
-      console.log(this.files.getAll(`blob${i}`));
+    // for (let i = 0; i < this.index; i++) {
+    for (let value of this.formData.values()) {
+      console.log(value);
     }
 
     this.createFileFromService();
     for (let i = 0; i < this.index; i++) {
-      this.files.delete(`blob${i}`);
+      this.formData.delete(`file`);
     }
     this.uploadForm.reset();
   }
