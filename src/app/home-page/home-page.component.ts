@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
-import { KeyValuePipe } from '@angular/common';
 
 enum ExpOption {
   A = '1 jour',
@@ -15,9 +14,9 @@ enum ExpOption {
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
+
 export class HomePageComponent {
-  options: Object = ExpOption;
-  // link!: FileList;
+  options = ExpOption;
   formData = new FormData();
   index!: number;
 
@@ -28,7 +27,7 @@ export class HomePageComponent {
 
   uploadForm = this.formbuilder.group({
     link: ['', [Validators.required]],
-    expiration: ['',Validators.required],
+    expiration: ['', Validators.required],
     email: ['', [Validators.email]],
   });
 
@@ -41,49 +40,34 @@ export class HomePageComponent {
   createFileFromService() {
     this.apiService.createFile(this.formData).subscribe();
   }
+
   inputFileChange(event: Event) {
     this.uploadForm.controls['link'].valueChanges;
     const input = event.target as HTMLInputElement;
     this.index = input.files!.length;
-    let fileList = input.files!;
-   
-    
-    for (let i = 0; i < fileList!.length; i++) {
-      let blobUrl = URL.createObjectURL(fileList![i]);
-      this.formData.append(`file`,  fileList![i] );
-      this.formData.append('file', blobUrl);
-     
+    let fileList = Array.from(input.files!);
+
+    for (let i = 0; i < fileList.length; i++) {
+      this.formData.append(`file`, fileList![i]);
+      let url = URL.createObjectURL(fileList![i]);
+      this.formData.append('url', url);
     }
-  
-   
-    console.log(fileList);
   }
 
   selectChange(event: Event) {
     this.uploadForm.controls['expiration'].valueChanges;
     const select = event.target as HTMLSelectElement;
-    // for (let i = 0; i < this.index; i++) {
-      this.formData.append(`file`, select.value);
-    // }
+    this.formData.append(`exp`, select.value);
   }
 
   inputMailChange(event: Event) {
     this.uploadForm.controls['email'].value;
     const input = event.target as HTMLInputElement;
-    // for (let i = 0; i < this.index; i++) {
-      this.formData.append(`file`, input.value);
-    // }
+    this.formData.append(`mail`, input.value);
   }
   onSubmit() {
-    // for (let i = 0; i < this.index; i++) {
-    for (let value of this.formData.values()) {
-      console.log(value);
-    }
-
     this.createFileFromService();
-    for (let i = 0; i < this.index; i++) {
-      this.formData.delete(`file`);
-    }
+    this.formData = new FormData();
     this.uploadForm.reset();
   }
 }
