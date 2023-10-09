@@ -20,7 +20,7 @@ export class HomePageComponent {
   index!: number;
 
   finalList: any[] = [];
-  object: { [key: string]: [string] } = {};
+  // object: { [key: string]: [string] } = {};
   constructor(
     private formbuilder: FormBuilder,
     private apiService: ApiService
@@ -54,6 +54,19 @@ export class HomePageComponent {
       this.formData.append('link', link);
     }
   }
+  displayList(){
+    let list = new Array();
+    list.push(...this.formData.getAll('file'), this.formData.getAll('link'));
+    this.finalList = new Array();
+    for (let i = 0; i < list.length - 1; i++) {
+       let object = {
+        name: list[i].name,
+        blob: list[list.length - 1][i],
+      };
+
+      this.finalList.push(object);
+    }
+  }
 
   selectChange(event: Event) {
     this.uploadForm.controls['expiration'].valueChanges;
@@ -68,17 +81,7 @@ export class HomePageComponent {
   }
   onSubmit() {
     this.createFileFromService();
-    let list = new Array();
-    list.push(...this.formData.getAll('file'), this.formData.getAll('link'));
-    this.finalList = new Array();
-    for (let i = 0; i < list.length - 1; i++) {
-      this.object = {
-        name: list[i].name,
-        blob: list[list.length - 1][i],
-      };
-
-      this.finalList.push(this.object);
-    }
+    this.displayList();
     this.formData = new FormData();
     this.uploadForm.reset();
   }

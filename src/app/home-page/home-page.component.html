@@ -40,10 +40,10 @@
     </form>
   </div>
 </section>
-<section>
+<section id="list">
   <ng-container>
     <li  *ngFor="let item of this.finalList">
-      <a [href]="item.blob"> - {{item.name}}</a>
+      <a [href]="item.blob" download> {{item.name}}</a>
     </li>
   </ng-container>
 </section>
