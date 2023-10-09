@@ -14,11 +14,12 @@ enum ExpOption {
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
-
 export class HomePageComponent {
   options = ExpOption;
   formData = new FormData();
   index!: number;
+  list: any[] = [];
+  test: any;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -33,7 +34,7 @@ export class HomePageComponent {
 
   getFilesFromService() {
     this.apiService.getFiles().subscribe((data) => {
-      this.formData = data;
+      this.list = data;
     });
   }
 
@@ -46,11 +47,10 @@ export class HomePageComponent {
     const input = event.target as HTMLInputElement;
     this.index = input.files!.length;
     let fileList = Array.from(input.files!);
-
     for (let i = 0; i < fileList.length; i++) {
       this.formData.append(`file`, fileList![i]);
-      let url = URL.createObjectURL(fileList![i]);
-      this.formData.append('url', url);
+      let link = URL.createObjectURL(fileList![i]);
+      this.formData.append('link', link);
     }
   }
 
@@ -65,9 +65,11 @@ export class HomePageComponent {
     const input = event.target as HTMLInputElement;
     this.formData.append(`mail`, input.value);
   }
+
   onSubmit() {
     this.createFileFromService();
     this.formData = new FormData();
     this.uploadForm.reset();
   }
+  
 }

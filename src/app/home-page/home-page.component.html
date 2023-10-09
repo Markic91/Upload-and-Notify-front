@@ -1,12 +1,46 @@
 <div class="container">
-  <form (ngSubmit)="uploadForm.valid && onSubmit()" [formGroup]="uploadForm" #myForm="ngForm" >
+  <form
+    (ngSubmit)="uploadForm.valid && onSubmit()"
+    [formGroup]="uploadForm"
+    #myForm="ngForm"
+  >
     <label for="link">Fichier :</label>
-    <input type="file" id="link" formControlName="link" multiple="multiple" (change)="inputFileChange($event)"  />
+    <input
+      type="file"
+      id="link"
+      formControlName="link"
+      multiple="multiple"
+      (change)="inputFileChange($event)"
+    />
     <label for="expiration">Durée avant expiration :</label>
-    <select name="expiration" id="expiration" formControlName="expiration" (change)="selectChange($event)">
-      <option *ngFor="let option of options | keyvalue " [value]="option.value">{{option.value}}</option>
+    <select
+      name="expiration"
+      id="expiration"
+      formControlName="expiration"
+      (change)="selectChange($event)"
+    >
+      <option *ngFor="let option of options | keyvalue" [value]="option.value">
+        {{ option.value }}
+      </option>
     </select>
     <label for="email"> Email (optionnel) : </label>
-    <input class="email" type="email" id="email" formControlName="email" (change)="inputMailChange($event)" placeholder="Email de la personne à aviser" />
+    <input
+      class="email"
+      type="email"
+      id="email"
+      formControlName="email"
+      (change)="inputMailChange($event)"
+      placeholder="Email de la personne à aviser"
+    />
     <button type="submit">Soumettre</button>
   </form>
+</div>
+<div *ngFor="let file of list" class="list-container">
+  <p>
+    {{ file.name }} : <a href=""> {{ file.link }} </a>
+  </p>
+</div>
+<!-- <div *ngFor="let item of formData">
+  <p> {{item}} </p>
+</div> -->
+<p> {{test}} </p>
