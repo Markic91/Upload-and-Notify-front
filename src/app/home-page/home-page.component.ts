@@ -19,8 +19,8 @@ export class HomePageComponent {
   formData = new FormData();
   index!: number;
   list: any[] = [];
-  test: any;
-
+  finalList: any[] = [];
+  object : { [key: string]: [string] } = {};
   constructor(
     private formbuilder: FormBuilder,
     private apiService: ApiService
@@ -32,11 +32,11 @@ export class HomePageComponent {
     email: ['', [Validators.email]],
   });
 
-  getFilesFromService() {
-    this.apiService.getFiles().subscribe((data) => {
-      this.list = data;
-    });
-  }
+  // getFilesFromService() {
+  //   this.apiService.getFiles().subscribe((data) => {
+  //     this.list = data;
+  //   });
+  // }
 
   createFileFromService() {
     this.apiService.createFile(this.formData).subscribe();
@@ -68,8 +68,13 @@ export class HomePageComponent {
 
   onSubmit() {
     this.createFileFromService();
+    this.list.push(...this.formData.getAll('file'), this.formData.getAll('link'));
+    for (let i = 0; i < this.list.length-1; i++){
+      this.object = { name :this.list[i].name, blob : this.list[this.list.length-1][i] }
+      this.finalList.push(this.object);
+    }
     this.formData = new FormData();
     this.uploadForm.reset();
   }
-  
+
 }

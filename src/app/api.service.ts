@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpEvent,
-  HttpRequest,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,14 +13,9 @@ export class ApiService {
   }
 
   createFile(formData: FormData): Observable<HttpEvent<{}>> {
-    const newRequest = new HttpRequest(
-      'POST',
-      'http://localhost:8080/files',
-      formData,
-      {
-        responseType: 'text',
-      }
-    );
-    return this.http.request(newRequest);
+    const newRequest = new HttpRequest('POST', 'http://localhost:8080/files', formData, {
+      responseType: 'text',
+      });
+      return this.http.request(newRequest);
   }
 }
