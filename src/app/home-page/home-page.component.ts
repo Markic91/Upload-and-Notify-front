@@ -18,9 +18,9 @@ export class HomePageComponent {
   options = ExpOption;
   formData = new FormData();
   index!: number;
-  list: any[] = [];
+
   finalList: any[] = [];
-  object : { [key: string]: [string] } = {};
+  object: { [key: string]: [string] } = {};
   constructor(
     private formbuilder: FormBuilder,
     private apiService: ApiService
@@ -68,9 +68,15 @@ export class HomePageComponent {
 
   onSubmit() {
     this.createFileFromService();
-    this.list.push(...this.formData.getAll('file'), this.formData.getAll('link'));
-    for (let i = 0; i < this.list.length-1; i++){
-      this.object = { name :this.list[i].name, blob : this.list[this.list.length-1][i] }
+    let list = new Array();
+    list.push(...this.formData.getAll('file'), this.formData.getAll('link'));
+    this.finalList = new Array();
+    for (let i = 0; i < list.length - 1; i++) {
+      this.object = {
+        name: list[i].name,
+        blob: list[list.length - 1][i],
+      };
+
       this.finalList.push(this.object);
     }
     this.formData = new FormData();
