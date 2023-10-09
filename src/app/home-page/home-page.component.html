@@ -1,12 +1,49 @@
-<div class="container">
-  <form (ngSubmit)="uploadForm.valid && onSubmit()" [formGroup]="uploadForm" #myForm="ngForm" >
-    <label for="link">Fichier :</label>
-    <input type="file" id="link" formControlName="link" multiple="multiple" (change)="inputFileChange($event)"  />
-    <label for="expiration">Durée avant expiration :</label>
-    <select name="expiration" id="expiration" formControlName="expiration" (change)="selectChange($event)">
-      <option *ngFor="let option of options | keyvalue " [value]="option.value">{{option.value}}</option>
-    </select>
-    <label for="email"> Email (optionnel) : </label>
-    <input class="email" type="email" id="email" formControlName="email" (change)="inputMailChange($event)" placeholder="Email de la personne à aviser" />
-    <button type="submit">Soumettre</button>
-  </form>
+<section>
+  <div class="container">
+    <form
+      (ngSubmit)="uploadForm.valid && onSubmit()"
+      [formGroup]="uploadForm"
+      #myForm="ngForm"
+    >
+      <label for="link">Fichier :</label>
+      <input
+        type="file"
+        id="link"
+        formControlName="link"
+        multiple="multiple"
+        (change)="inputFileChange($event)"
+      />
+      <label for="expiration">Durée avant expiration :</label>
+      <select
+        name="expiration"
+        id="expiration"
+        formControlName="expiration"
+        (change)="selectChange($event)"
+      >
+        <option
+          *ngFor="let option of options | keyvalue"
+          [value]="option.value"
+        >
+          {{ option.value }}
+        </option>
+      </select>
+      <label for="email"> Email (optionnel) : </label>
+      <input
+        class="email"
+        type="email"
+        id="email"
+        formControlName="email"
+        (change)="inputMailChange($event)"
+        placeholder="Email de la personne à aviser"
+      />
+      <button type="submit">Soumettre</button>
+    </form>
+  </div>
+</section>
+<section>
+  <ng-container>
+    <li  *ngFor="let item of this.finalList">
+      <a [href]="item.blob"> - {{item.name}}</a>
+    </li>
+  </ng-container>
+</section>

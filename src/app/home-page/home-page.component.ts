@@ -14,12 +14,13 @@ enum ExpOption {
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
-
 export class HomePageComponent {
   options = ExpOption;
   formData = new FormData();
   index!: number;
-
+  list: any[] = [];
+  finalList: any[] = [];
+  object : { [key: string]: [string] } = {};
   constructor(
     private formbuilder: FormBuilder,
     private apiService: ApiService
@@ -31,11 +32,11 @@ export class HomePageComponent {
     email: ['', [Validators.email]],
   });
 
-  getFilesFromService() {
-    this.apiService.getFiles().subscribe((data) => {
-      this.formData = data;
-    });
-  }
+  // getFilesFromService() {
+  //   this.apiService.getFiles().subscribe((data) => {
+  //     this.list = data;
+  //   });
+  // }
 
   createFileFromService() {
     this.apiService.createFile(this.formData).subscribe();
@@ -49,8 +50,8 @@ export class HomePageComponent {
 
     for (let i = 0; i < fileList.length; i++) {
       this.formData.append(`file`, fileList![i]);
-      let url = URL.createObjectURL(fileList![i]);
-      this.formData.append('url', url);
+      let link = URL.createObjectURL(fileList![i]);
+      this.formData.append('link', link);
     }
   }
 
@@ -67,6 +68,11 @@ export class HomePageComponent {
   }
   onSubmit() {
     this.createFileFromService();
+    this.list.push(...this.formData.getAll('file'), this.formData.getAll('link'));
+    for (let i = 0; i < this.list.length-1; i++){
+      this.object = { name :this.list[i].name, blob : this.list[this.list.length-1][i] }
+      this.finalList.push(this.object);
+    }
     this.formData = new FormData();
     this.uploadForm.reset();
   }
