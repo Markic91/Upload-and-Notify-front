@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  getFiles() {
-    return this.http.get<any>('http://localhost:8080/files');
-  }
+  // getFiles() {
+  //   return this.http.get<any>('http://localhost:8080/files');
+  // }
 
   createFile(formData: FormData): Observable<HttpEvent<{}>> {
     const newRequest = new HttpRequest('POST', 'http://localhost:8080/files', formData, {
