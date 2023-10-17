@@ -42,8 +42,12 @@
 </section>
 <section>
   <ng-container>
-    <li  *ngFor="let item of this.finalList">
-      <a [href]="item.blob"> - {{item.name}}</a>
+    <li class="list-container" *ngFor="let item of this.finalList">
+      <i class="fa-solid fa-crow"></i>
+      <i class="fa-solid fa-skull"></i>
+      <a [href]="item.blob" download>  {{item.name}}</a>
+      <i class="fa-solid fa-ghost"></i>
+      <i class="fa-solid fa-spider"></i>
     </li>
   </ng-container>
 </section>
