@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
+import { myFile } from '../model';
+
 
 enum ExpirationOptions {
   A = '1 jour',
@@ -16,7 +18,8 @@ enum ExpirationOptions {
 })
 export class HomePageComponent {
   options = ExpirationOptions;
-  files! : any ; 
+
+  files!: myFile[];
 
   constructor(
     private formbuilder: FormBuilder,
@@ -30,9 +33,10 @@ export class HomePageComponent {
     email: ['', [Validators.email]],
   });
 
-
-  createFileFromService(formaData : FormData) {
-    this.apiService.createFile(formaData).subscribe(data  => this.files = data);
+  createFileFromService(formaData: FormData) {
+    this.apiService.createFile(formaData).subscribe((data) => {
+      this.files = data;
+    });
   }
 
   inputFileChange(event: Event) {
@@ -42,7 +46,8 @@ export class HomePageComponent {
   onSubmit() {
     let formData = new FormData();
     for (let file of this.uploadForm.controls.files.value!) {
-    formData.append('files', file);}
+      formData.append('files', file);
+    }
     formData.append('mail', this.uploadForm.controls.email.value!);
     formData.append('exp', this.uploadForm.controls.expiration.value!);
     this.createFileFromService(formData);
