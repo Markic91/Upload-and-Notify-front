@@ -16,7 +16,7 @@ enum ExpirationOptions {
 })
 export class HomePageComponent {
   options = ExpirationOptions;
-  
+  files! : any ; 
 
   constructor(
     private formbuilder: FormBuilder,
@@ -32,7 +32,7 @@ export class HomePageComponent {
 
 
   createFileFromService(formaData : FormData) {
-    this.apiService.createFile(formaData).subscribe();
+    this.apiService.createFile(formaData).subscribe(data  => this.files = data);
   }
 
   inputFileChange(event: Event) {

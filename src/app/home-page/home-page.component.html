@@ -34,10 +34,10 @@
     </form>
   </div>
 </section>
-<!-- <section id="list" *ngIf="">
-  <ng-container >
-    <li *ngFor=" let file of this.uploadForm.controls.files.value! ">
-      <a [href]="file.name" download> {{ file.name }}</a>
+<section id="list">
+  
+    <li *ngFor=" let file of this.files ">
+      <a [href]="file.link" download> {{ file.name }}</a>
     </li>
-  </ng-container>
-</section> -->
+  
+</section>
