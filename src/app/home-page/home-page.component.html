@@ -14,12 +14,7 @@
         (change)="inputFileChange($event)"
       />
       <label for="expiration">Durée avant expiration :</label>
-      <select
-        name="expiration"
-        id="expiration"
-        formControlName="expiration"
-        (change)="selectChange($event)"
-      >
+      <select name="expiration" id="expiration" formControlName="expiration">
         <option
           *ngFor="let option of options | keyvalue"
           [value]="option.value"
@@ -33,21 +28,15 @@
         type="email"
         id="email"
         formControlName="email"
-        (change)="inputMailChange($event)"
         placeholder="Email de la personne à aviser"
       />
       <button type="submit">Soumettre</button>
     </form>
   </div>
 </section>
-<section>
-  <ng-container>
-    <li class="list-container" *ngFor="let item of this.finalList">
-      <i class="fa-solid fa-crow"></i>
-      <i class="fa-solid fa-skull"></i>
-      <a [href]="item.blob" download>  {{item.name}}</a>
-      <i class="fa-solid fa-ghost"></i>
-      <i class="fa-solid fa-spider"></i>
+<section id="list">
+    <li *ngFor=" let file of this.files ">
+      <a [href]="file.link" download> {{ file.name }}</a>
     </li>
-  </ng-container>
+  
 </section>
